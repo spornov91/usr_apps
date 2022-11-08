@@ -9,6 +9,7 @@
 	android:layout_gravity="top">
 	
 	<TextView
+		android:id="@+id/list_services"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:text=""
@@ -41,6 +42,12 @@
 			android:layout_height="wrap_content"
 			android:text="user"/>
 
+		<Button
+			android:id="@+id/bfraglistuserdataapps"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="data"/>
+		
 		<Button
 			android:id="@+id/bfragsettings"
 			android:layout_width="wrap_content"

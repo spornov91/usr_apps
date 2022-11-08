@@ -5,6 +5,7 @@ import android.content.*;
 import android.os.*;
 import android.view.*;
 import android.widget.*;
+import ru.spornov91.usr_apps.*;
 
 public class ActivityStartApp extends Activity implements View.OnClickListener 
 {
@@ -21,6 +22,11 @@ public class ActivityStartApp extends Activity implements View.OnClickListener
             case R.id.bfraglistuserapps:
 				ft = getFragmentManager().beginTransaction();
 				ft.replace(R.id.sframe, new FragListUserApps());
+				ft.commit();
+                break;
+			case R.id.bfraglistuserdataapps:
+				ft = getFragmentManager().beginTransaction();
+				ft.replace(R.id.sframe, new FragListUserDataApps());
 				ft.commit();
                 break;
 			case R.id.bfragsettings:
@@ -42,7 +48,9 @@ public class ActivityStartApp extends Activity implements View.OnClickListener
 		bfrag1.setOnClickListener(this);
 		Button bfrag2 = findViewById(R.id.bfraglistuserapps);
 		bfrag2.setOnClickListener(this);
-		Button bfrag3 = findViewById(R.id.bfragsettings);
+		Button bfrag3 = findViewById(R.id.bfraglistuserdataapps);
 		bfrag3.setOnClickListener(this);
+		Button bfrag4 = findViewById(R.id.bfragsettings);
+		bfrag4.setOnClickListener(this);
 	};
 };
