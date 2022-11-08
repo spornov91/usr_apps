@@ -1,13 +1,14 @@
 package ru.spornov91.usr_apps;
 
 import android.app.*;
+import android.content.*;
 import android.content.pm.*;
 import android.os.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
+import android.widget.AdapterView.*;
 import java.util.*;
-import ru.spornov91.usr_apps.*;
 
 public class FragListUserApps extends Fragment
 {
@@ -49,6 +50,21 @@ public class FragListUserApps extends Fragment
 
 		// присваиваем адаптер списку
 		listApps.setAdapter(adapter);
+		listApps.setOnItemClickListener(new OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+					String item1 = (String)((TextView) view).getText();
+
+					ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+					ClipData clip = ClipData.newPlainText("text", item1);
+					if (clipboard != null) {
+						clipboard.setPrimaryClip(clip);
+					}
+
+					Toast.makeText(getActivity(), "Скопированно", Toast.LENGTH_SHORT).show();
+				}
+		});
 		return v;
 
 };
