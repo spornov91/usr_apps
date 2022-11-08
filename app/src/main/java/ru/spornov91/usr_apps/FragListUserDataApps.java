@@ -48,31 +48,19 @@ public class FragListUserDataApps extends Fragment
 					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 						
 						String item1 = (String)((TextView) view).getText();
-						
-						ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-						ClipData clip = ClipData.newPlainText("text", item1);
-						if (clipboard != null) {
-							clipboard.setPrimaryClip(clip);
-						}
-						
-						Toast.makeText(getActivity(), "Скопированно", Toast.LENGTH_SHORT).show();
+						showPopup(item1,view);
 					}
 			});
 			
-//			if(dir.canRead() && fs!=null) {
-//				Log.d("Files", "Size: "+ fs.length);
-//
-//				for (int i = 0; i < fs.length; i++)
-//				{
-//					File isDir = new File(dir, fs[i].getName());
-//					if(isDir.isDirectory()){
-//						Log.d("Files", "D:" + fs[i].getName());
-//					}
-//				}
-//			}
 		} else {
 			requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_PERMISSIONS);
 		}
 		return v;
-};
+    };
+	public void showPopup(String txt, View view) {
+		FragDialogPopup myDialogFragment = new FragDialogPopup(txt);
+		FragmentManager manager = getFragmentManager();
+		FragmentTransaction transaction = manager.beginTransaction();
+		myDialogFragment.show(transaction, "dialog");
+	}
 };

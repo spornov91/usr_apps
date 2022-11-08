@@ -3,11 +3,13 @@ package ru.spornov91.usr_apps;
 import android.app.*;
 import android.content.*;
 import android.content.pm.*;
+import android.net.*;
 import android.os.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
 import android.widget.AdapterView.*;
+import java.io.*;
 import java.util.*;
 
 public class FragListSystemApps extends Fragment
@@ -53,16 +55,8 @@ public class FragListSystemApps extends Fragment
 		listApps.setOnItemClickListener(new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
 					String item1 = (String)((TextView) view).getText();
-
-					ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-					ClipData clip = ClipData.newPlainText("text", item1);
-					if (clipboard != null) {
-						clipboard.setPrimaryClip(clip);
-					}
-
-					Toast.makeText(getActivity(), "Скопированно", Toast.LENGTH_SHORT).show();
+					showPopup(item1,view);
 				}
 		});
 		return v;
@@ -77,6 +71,10 @@ private static String[] DelEmptyRowArray(String[] arr) {
 		}
 		return list.toArray(new String[0]);
 };
-		
-		
+    public void showPopup(String txt, View view) {
+		FragDialogPopup myDialogFragment = new FragDialogPopup(txt);
+		FragmentManager manager = getFragmentManager();
+		FragmentTransaction transaction = manager.beginTransaction();
+		myDialogFragment.show(transaction, "dialog");
+	}
 };
