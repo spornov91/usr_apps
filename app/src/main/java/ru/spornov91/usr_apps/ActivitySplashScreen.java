@@ -13,12 +13,13 @@ public class ActivitySplashScreen extends Activity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-		// Hide ActionBar
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		//getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-		//getActionBar().hide();
 		
         setContentView(R.layout.activity_splash_screen);
+		
+//		if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {         
+//			getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+//			getWindow().setNavigationBarColor(getResources().getColor(R.color.colorPrimaryDark));
+//		}
 		
 		new Handler().postDelayed(new Runnable(){
 			@Override

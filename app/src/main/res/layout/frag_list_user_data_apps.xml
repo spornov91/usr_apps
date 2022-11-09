@@ -17,12 +17,10 @@
 		<EditText
 			android:id="@+id/search_filter"
 			android:layout_width="match_parent"
-			android:ems="10"
 			android:hint="android/data"
 			android:layout_height="30dp"
 			android:gravity="top|center"
-			android:background="@drawable/search"
-			android:layout_margin="10dp"/>
+			android:background="@drawable/search"/>
 
 	</LinearLayout>
 
