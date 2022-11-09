@@ -53,5 +53,15 @@ public class Utils
 //					}
 //				}
 //			}
+	};
+	
+	public void openPkgInApkPure(Context ctx,String pkgName){
+		Uri url = Uri.parse("https://m.apkpure.com/ru/" + pkgName);
+		Log.d(TAG, url.toString());
+		Intent browser = new Intent();
+		browser.setAction(Intent.ACTION_VIEW);
+		browser.setData(url);
+		ctx.startActivity(browser);
 	}
-}
+	
+};

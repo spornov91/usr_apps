@@ -42,6 +42,11 @@ public class ActivityStartApp extends Activity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+		// Hide ActionBar
+		//requestWindowFeature(Window.FEATURE_NO_TITLE);
+		//getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+		//getActionBar().hide();
+		
         setContentView(R.layout.activity_start_app);
 		
 		Button bfrag1 = findViewById(R.id.bfraglistsystemapps);

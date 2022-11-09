@@ -3,13 +3,28 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:gravity="center"
-	android:orientation="vertical">
+	android:gravity="top|center"
+	android:orientation="vertical"
+	android:background="#EAECFE">
 
-	<TextView
-		android:text="List Android/data Apps"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"/>
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:gravity="top|center"
+		android:orientation="horizontal"
+		android:background="#EAECFE">
+
+		<EditText
+			android:id="@+id/search_filter"
+			android:layout_width="match_parent"
+			android:ems="10"
+			android:hint="android/data"
+			android:layout_height="30dp"
+			android:gravity="top|center"
+			android:background="@drawable/search"
+			android:layout_margin="10dp"/>
+
+	</LinearLayout>
 
 	<ListView
 		android:id="@+id/listApps"

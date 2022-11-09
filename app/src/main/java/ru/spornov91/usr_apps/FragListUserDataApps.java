@@ -2,19 +2,19 @@ package ru.spornov91.usr_apps;
 
 import android.*;
 import android.app.*;
-import android.content.*;
 import android.content.pm.*;
 import android.os.*;
+import android.text.*;
 import android.util.*;
 import android.view.*;
 import android.widget.*;
 import android.widget.AdapterView.*;
 import java.io.*;
-import ru.spornov91.usr_apps.*;
 
 public class FragListUserDataApps extends Fragment
 {
 	private String TAG = "spornov91";
+	private ArrayAdapter<String> adapter;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -36,7 +36,7 @@ public class FragListUserDataApps extends Fragment
 			ListView listApps = v.findViewById(R.id.listApps);
 
 			// создаем адаптер
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+			adapter = new ArrayAdapter<String>(
 				getActivity().getApplicationContext(),
 				android.R.layout.simple_list_item_1, clearDataList
 			);
@@ -51,7 +51,9 @@ public class FragListUserDataApps extends Fragment
 						showPopup(item1,view);
 					}
 			});
+			searchEditView(v);
 			
+				
 		} else {
 			requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_PERMISSIONS);
 		}
@@ -63,4 +65,23 @@ public class FragListUserDataApps extends Fragment
 		FragmentTransaction transaction = manager.beginTransaction();
 		myDialogFragment.show(transaction, "dialog");
 	}
+	
+	public void searchEditView(View v){
+		EditText filter = v.findViewById(R.id.search_filter);
+		filter.addTextChangedListener(new TextWatcher() {
+				@Override
+				public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+				}
+
+				@Override
+				public void onTextChanged(CharSequence s, int start, int before, int count) {
+					adapter.getFilter().filter(s);
+				}
+
+				@Override
+				public void afterTextChanged(Editable s) {
+				};
+
+			});
+	};
 };
