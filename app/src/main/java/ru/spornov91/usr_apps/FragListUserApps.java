@@ -38,7 +38,8 @@ public class FragListUserApps extends Fragment
 			} 
 
 		}
-		String[] clearPkgList = DelEmptyRowArray(pkgList);
+		String[] emptyRowArray = DelEmptyRowArray(pkgList);
+		String[] clearPkgList = editPkgName(emptyRowArray);
 		// находим список
 		ListView listApps = v.findViewById(R.id.listApps);
 
@@ -55,6 +56,7 @@ public class FragListUserApps extends Fragment
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 					String item1 = (String)((TextView) view).getText();
+				
 					showPopup(item1,view);
 				}
 		});
@@ -70,6 +72,19 @@ private static String[] DelEmptyRowArray(String[] arr) {
 		}
 		return list.toArray(new String[0]);
 };
+
+	private static String[] editPkgName(String[] arr) {
+		ArrayList<String> list = new ArrayList<String>();
+		for (String str : arr) {
+			String[] parts = str.split("/");
+			str = parts[3];
+			parts = str.split("-");
+			str = parts[0];
+			list.add(str);
+		}
+		return list.toArray(new String[0]);
+	};
+
 	public void showPopup(String txt, View view) {
 		FragDialogPopup myDialogFragment = new FragDialogPopup(txt);
 		FragmentManager manager = getFragmentManager();

@@ -2,14 +2,12 @@ package ru.spornov91.usr_apps;
 
 
 
-import android.app.*;
 import android.content.*;
 import android.net.*;
 import android.os.*;
 import android.util.*;
-import android.view.*;
 import android.widget.*;
-import java.io.*;
+import java.util.*;
 
 public class Utils
 {
@@ -23,13 +21,58 @@ public class Utils
 		Toast.makeText(ctx, "Скопированно", Toast.LENGTH_SHORT).show();
 	};
 
+	public static String[] addpreffixarr(String[] arr, String preffix) {
+		ArrayList<String> list = new ArrayList<String>();
+		for (String pkgname : arr) {
+			//String preffix = "-_android/app";
+			pkgname += pkgname + preffix;
+			list.add(pkgname);
+		}
+		return list.toArray(new String[0]);
+	};
+	
+	public static String[] removepreffixarr(String[] arr) {
+		ArrayList<String> list = new ArrayList<String>();
+		for (String pkgname : arr) {
+			String[] notpreffix = pkgname.split("-_");
+			pkgname = notpreffix[0];
+			list.add(pkgname);
+		}
+		return list.toArray(new String[0]);
+	};
+	
+	public String removepreffixstr(String pkgname){
+		String[] notpreffix = pkgname.split("-_");
+		pkgname = notpreffix[0];
+		return pkgname;
+	}
+	
+	public int getpreffixstr(String pkgname){
+		String[] notpreffix = pkgname.split("-_");
+		pkgname = notpreffix[1];
+		return Integer.parseInt(pkgname);
+	}
+	
 	public void openFolder(Context ctx , String dir4){
-		//String dir1 = "/android/data/com.miui.screenrecorder";
-		String dir0 = Environment.getExternalStorageDirectory().getPath();
-		String dir2 = dir4 + File.separator;
-		Log.d(TAG, "D: "+dir2);
+        int type = getpreffixstr(dir4);
+		removepreffixstr(dir4);
+		
+		String dir0 = "";
+		switch(type){
+		        case 0 : 
+			            dir0="/system/app/"+dir4;
+				        break;
+				case 1 :
+			            dir0="/data/app/"+dir4;
+				        break;
+				case 2 :
+			            dir0 = Environment.getExternalStorageDirectory().getPath();
+				        dir0 = dir0 + "/android/data/"+dir4;
+				        break;
+		}
+		
 		Intent intent = new Intent(Intent.ACTION_VIEW);
-		intent.setDataAndType(Uri.parse(dir2), "*/*");
+		intent.setDataAndType(Uri.parse(dir0), "*/*");
 		ctx.startActivity(Intent.createChooser(intent, "Open folder"));
 	};
 

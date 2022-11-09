@@ -10,6 +10,7 @@ public class FragDialogPopup extends DialogFragment
  {
 	    public Utils utils = new Utils();
 		public String txt = "";
+		public int dirtype;
 	    FragDialogPopup(String text){
 			txt = text;
 		}

@@ -10,10 +10,12 @@ import android.view.*;
 import android.widget.*;
 import android.widget.AdapterView.*;
 import java.io.*;
+import java.util.*;
 
 public class FragListUserDataApps extends Fragment
 {
 	private String TAG = "spornov91";
+	
 	private ArrayAdapter<String> adapter;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -24,8 +26,7 @@ public class FragListUserDataApps extends Fragment
 		int permissionStatus = getActivity().getApplicationContext().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
 
 		if (permissionStatus == PackageManager.PERMISSION_GRANTED) {
-
-			Log.d(TAG, "granted: ");
+			
 			String path0 = Environment.getExternalStorageDirectory().toString();
 			String path1 = "/Android/data";
 			String path = path0 + path1;
@@ -48,17 +49,18 @@ public class FragListUserDataApps extends Fragment
 					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 						
 						String item1 = (String)((TextView) view).getText();
+					    //int dirType = 2;
 						showPopup(item1,view);
 					}
 			});
 			searchEditView(v);
-			
 				
 		} else {
 			requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_PERMISSIONS);
 		}
 		return v;
     };
+	
 	public void showPopup(String txt, View view) {
 		FragDialogPopup myDialogFragment = new FragDialogPopup(txt);
 		FragmentManager manager = getFragmentManager();
