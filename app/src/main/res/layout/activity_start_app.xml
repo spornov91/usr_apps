@@ -4,7 +4,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:gravity="top|center"
-	android:background="#EAECFE"
+	android:background="#C6CBFF"
 	android:orientation="vertical"
 	android:layout_gravity="top">
 
@@ -27,32 +27,45 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:gravity="top|center"
-		android:layout_gravity="top|center">
+		android:layout_gravity="top|center"
+		android:layout_margin="10dp"
+		android:background="@drawable/search">
 
-		<Button
+		<ImageButton
 			android:id="@+id/bfraglistsystemapps"
 			android:layout_width="wrap_content"
+			style="?android:attr/buttonBarButtonStyle"
 			android:layout_height="wrap_content"
-			android:text="system"
-			android:gravity="center"/>
+			android:src="@drawable/ic_recents"
+			android:layout_margin="10dp"
+			android:padding="10dp"/>
 
-		<Button
+		<ImageButton
 			android:id="@+id/bfraglistuserapps"
 			android:layout_width="wrap_content"
+			style="?android:attr/buttonBarButtonStyle"
 			android:layout_height="wrap_content"
-			android:text="user"/>
+			android:src="@drawable/ic_friends"
+			android:layout_margin="10dp"
+			android:padding="10dp"/>
 
-		<Button
+		<ImageButton
 			android:id="@+id/bfraglistuserdataapps"
 			android:layout_width="wrap_content"
+			style="?android:attr/buttonBarButtonStyle"
 			android:layout_height="wrap_content"
-			android:text="data"/>
+			android:src="@drawable/ic_nearby"
+			android:layout_margin="10dp"
+			android:padding="10dp"/>
 
-		<Button
+		<ImageButton
 			android:id="@+id/bfragsettings"
 			android:layout_width="wrap_content"
+			style="?android:attr/buttonBarButtonStyle"
 			android:layout_height="wrap_content"
-			android:text="settings"/>
+			android:src="@drawable/ic_restaurants"
+			android:layout_margin="10dp"
+			android:padding="10dp"/>
 
 	</LinearLayout>
 

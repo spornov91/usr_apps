@@ -9,10 +9,12 @@ import android.view.*;
 import android.widget.*;
 import android.widget.AdapterView.*;
 import java.util.*;
+import android.text.*;
 
 public class FragListUserApps extends Fragment
 {
 	private String TAG = "spornov91";
+	private ArrayAdapter<String> adapter;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -38,15 +40,15 @@ public class FragListUserApps extends Fragment
 			} 
 
 		}
-		String[] emptyRowArray = DelEmptyRowArray(pkgList);
-		String[] clearPkgList = editPkgName(emptyRowArray);
+		final String[] notNullPkgList = DelEmptyRowArray(pkgList);
+		String[] clearPkgList = editPkgName(notNullPkgList);
 		// находим список
 		ListView listApps = v.findViewById(R.id.listApps);
 
 		// создаем адаптер
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+		adapter = new ArrayAdapter<String>(
 		getActivity().getApplicationContext(),
-		android.R.layout.simple_list_item_1, clearPkgList
+			android.R.layout.simple_list_item_1, notNullPkgList
 		);
 
 		// присваиваем адаптер списку
@@ -56,13 +58,35 @@ public class FragListUserApps extends Fragment
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 					String item1 = (String)((TextView) view).getText();
-				
+				    String item2 = notNullPkgList[position];
 					showPopup(item1,view);
 				}
 		});
+		
+		searchEditView(v);
+		
 		return v;
 
 };
+
+	public void searchEditView(View v){
+		EditText filter = v.findViewById(R.id.search_filter);
+		filter.addTextChangedListener(new TextWatcher() {
+				@Override
+				public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+				}
+
+				@Override
+				public void onTextChanged(CharSequence s, int start, int before, int count) {
+					adapter.getFilter().filter(s);
+				}
+
+				@Override
+				public void afterTextChanged(Editable s) {
+				};
+
+			});
+	};
 
 private static String[] DelEmptyRowArray(String[] arr) {
 		ArrayList<String> list = new ArrayList<String>();

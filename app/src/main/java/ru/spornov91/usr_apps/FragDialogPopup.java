@@ -17,7 +17,7 @@ public class FragDialogPopup extends DialogFragment
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
             
-			final String[] arrOptions = {"Скопировать", "Отправить", "Найти", "Скачать"};
+			final String[] arrOptions = {"Скопировать", "Отправить", "Скачать"};
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder
@@ -37,12 +37,12 @@ public class FragDialogPopup extends DialogFragment
 //								   Toast.LENGTH_SHORT).show();
 								   utils.sendAction(ctx, txt);
 								   break;
-						    case 2:
+						    case 4:
 //								   Toast.makeText(ctx,"Выбрал: " + txt,
 //								   Toast.LENGTH_SHORT).show();
 								   utils.openFolder(ctx, txt);
 								   break;
-						    case 3:
+						    case 2:
 //								   Toast.makeText(ctx,"Выбрал: " + txt,
 //								   Toast.LENGTH_SHORT).show();
 								   utils.openPkgInApkPure(ctx, txt);

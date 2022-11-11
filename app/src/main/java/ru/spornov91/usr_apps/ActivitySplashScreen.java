@@ -6,6 +6,7 @@ import android.os.*;
 import android.view.*;
 import android.widget.*;
 import ru.spornov91.usr_apps.*;
+import android.util.*;
 
 public class ActivitySplashScreen extends Activity 
 {

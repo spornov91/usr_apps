@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="@android:style/Theme.Material.Light.NoActionBar">
-		<item name="windowNoTitle">true</item>
-		<item name="windowActionBar">false</item>
-		<item name="android:windowFullscreen">false</item>
-		<item name="android:windowContentOverlay">@null</item>
-		<!-- Customize your theme here. -->
-		<item name="colorPrimary">@color/colorPrimary</item>
-		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-		<item name="colorAccent">@color/colorAccent</item>
+    <style name="AppTheme" parent="@android:style/Theme.Material.Light">
+		<!-- Customize window colors here. -->
 		<item name="android:navigationBarColor">@color/colorPrimary</item>
 		<item name="android:windowBackground">@color/colorPrimary</item>
 		<item name="android:statusBarColor">@color/colorPrimary</item>
+		<!-- Customize colors theme here. -->
+		<item name="colorPrimary">@color/colorPrimary</item>
+		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+		<item name="colorAccent">@color/colorAccent</item>
+	</style>
+	<style name="SplashTheme" parent="@android:style/Theme.Material.Light.NoActionBar">
+	<!--<item name="windowNoTitle">true</item>
+	<item name="windowActionBar">false</item>
+	<item name="android:windowFullscreen">false</item>
+	<item name="android:windowContentOverlay">@null</item>-->
+		<!-- Customize window colors here. -->
+		<item name="android:navigationBarColor">@color/colorPrimary</item>
+		<item name="android:windowBackground">@color/colorPrimary</item>
+		<item name="android:statusBarColor">@color/colorPrimary</item>
+		<!-- Customize colors theme here. -->
+		<item name="colorPrimary">@color/colorPrimary</item>
+		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+		<item name="colorAccent">@color/colorAccent</item>
 	</style>
 </resources>
