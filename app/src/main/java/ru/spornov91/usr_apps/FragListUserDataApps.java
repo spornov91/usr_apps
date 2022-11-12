@@ -53,7 +53,6 @@ public class FragListUserDataApps extends Fragment
 						showPopup(item1,view);
 					}
 			});
-			searchEditView(v);
 				
 		} else {
 			requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_PERMISSIONS);
@@ -68,22 +67,8 @@ public class FragListUserDataApps extends Fragment
 		myDialogFragment.show(transaction, "dialog");
 	}
 	
-	public void searchEditView(View v){
-		EditText filter = v.findViewById(R.id.search_filter);
-		filter.addTextChangedListener(new TextWatcher() {
-				@Override
-				public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-				}
-
-				@Override
-				public void onTextChanged(CharSequence s, int start, int before, int count) {
-					adapter.getFilter().filter(s);
-				}
-
-				@Override
-				public void afterTextChanged(Editable s) {
-				};
-
-			});
-	};
+	public void search_in_actionbar(String s){
+	    adapter.getFilter().filter(s);
+    }
+	
 };

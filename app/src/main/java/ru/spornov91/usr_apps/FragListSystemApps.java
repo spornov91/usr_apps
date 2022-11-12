@@ -13,13 +13,30 @@ import java.io.*;
 import java.util.*;
 import android.text.*;
 
+
 public class FragListSystemApps extends Fragment
 {
+//	interface OnFragmentSendDataListener {
+//        void onSendData(String data);
+//    }
+//
+//    private OnFragmentSendDataListener fragmentSendDataListener;
+//	
+//	@Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//		fragmentSendDataListener = (OnFragmentSendDataListener) context;
+//    }
+
 	private String TAG = "spornov91";
 	private ArrayAdapter<String> adapter;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
+		//Посылаем данные Activity
+		//fragmentSendDataListener.onSendData("system");
+		
 		View v = inflater.inflate(R.layout.frag_list_system_apps,null);
 		// Flags: See below
 		int flags = 
@@ -63,30 +80,14 @@ public class FragListSystemApps extends Fragment
 					showPopup(item1,view);
 				}
 		});
-	
-		searchEditView(v);
 		
 		return v;
 
 };
-	public void searchEditView(View v){
-		EditText filter = v.findViewById(R.id.search_filter);
-		filter.addTextChangedListener(new TextWatcher() {
-				@Override
-				public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-				}
 
-				@Override
-				public void onTextChanged(CharSequence s, int start, int before, int count) {
-					adapter.getFilter().filter(s);
-				}
-
-				@Override
-				public void afterTextChanged(Editable s) {
-				};
-
-			});
-	};
+	public void search_in_actionbar(String s){
+	    adapter.getFilter().filter(s);
+    }
 
 private static String[] DelEmptyRowArray(String[] arr) {
 		ArrayList<String> list = new ArrayList<String>();

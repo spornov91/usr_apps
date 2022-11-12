@@ -9,27 +9,29 @@ import ru.spornov91.usr_apps.*;
 import android.support.v4.view.*;
 import android.util.*;
 
-public class ActivityRouteApp extends Activity implements View.OnClickListener 
+public class ActivityRouteApp extends Activity implements View.OnClickListener
 {
-	
+	Fragment fragment;
+	Fragment frag1;
+	int num_frag = 0;
 	@Override
 	public void onClick(View p1)
 	{
 		switch (p1.getId()) {
             case R.id.bfraglistsystemapps:
 				ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.sframe, new FragListSystemApps());
-				ft.commit();
+				fragment = new FragListSystemApps();
+				num_frag = 0;
                 break;
             case R.id.bfraglistuserapps:
 				ft = getFragmentManager().beginTransaction();
-				ft.replace(R.id.sframe, new FragListUserApps());
-				ft.commit();
+				fragment = new FragListUserApps();
+				num_frag = 1;
                 break;
 			case R.id.bfraglistuserdataapps:
 				ft = getFragmentManager().beginTransaction();
-				ft.replace(R.id.sframe, new FragListUserDataApps());
-				ft.commit();
+				fragment = new FragListUserDataApps();
+				num_frag = 2;
                 break;
 			case R.id.bfragsettings:
 				Intent intent = new Intent(getApplicationContext(), ActivitySettings.class);
@@ -37,6 +39,8 @@ public class ActivityRouteApp extends Activity implements View.OnClickListener
 				break;
 			default : break;
 		}
+		ft.replace(R.id.sframe, fragment);
+		ft.commit();
 	};
 	
 	FragmentTransaction ft;
@@ -57,10 +61,26 @@ public class ActivityRouteApp extends Activity implements View.OnClickListener
 		bfrag4.setOnClickListener(this);
 		
 		ft = getFragmentManager().beginTransaction();
-		ft.add(R.id.sframe, new FragListSystemApps());
+		fragment = new FragListSystemApps();
+		ft.add(R.id.sframe, fragment);
 		ft.commit();
 	
 	};
+	
+    public void onFragmentSendData(String txt) {
+			switch(num_frag){
+			case 0: 
+				FragListSystemApps   frag0 = (FragListSystemApps)   getFragmentManager().findFragmentById(R.id.sframe);
+				if (frag0 != null){  frag0.search_in_actionbar(txt);break; }
+			case 1: 
+				FragListUserApps     frag1 = (FragListUserApps)     getFragmentManager().findFragmentById(R.id.sframe);
+				if (frag1 != null){  frag1.search_in_actionbar(txt);break; }
+			case 2: 
+				FragListUserDataApps frag2 = (FragListUserDataApps) getFragmentManager().findFragmentById(R.id.sframe);
+				if (frag2 != null){  frag2.search_in_actionbar(txt);break; }
+		}
+        
+    };
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
@@ -75,7 +95,8 @@ public class ActivityRouteApp extends Activity implements View.OnClickListener
 		
 				@Override
 				public boolean onQueryTextChange(String newText) {
-					Toast.makeText(getApplicationContext(), "searchbartext...", Toast.LENGTH_LONG).show();
+					onFragmentSendData(newText);
+					//Toast.makeText(getApplicationContext(), "searchbartext...", Toast.LENGTH_LONG).show();
 					return false;
 				}
 				
@@ -97,14 +118,6 @@ public class ActivityRouteApp extends Activity implements View.OnClickListener
 		searchView.setMaxWidth( Integer.MAX_VALUE );
 		searchItem.expandActionView();
 		
-		//ActionBar actionBar = getActionBar(); // As you said you are using support library
-//		LayoutInflater inflator = (LayoutInflater) this .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//		View v = inflator.inflate(R.layout.actionbar_custom_theme, null);
-//		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-//		actionBar.setCustomView(v);
-		//SearchView searchView = (SearchView)menu.findItem(R.id.action_search).getActionView();
-		//searchView.setMaxWidth(Integer.MAX_VALUE);
-		
 		return true;
 	}
 
@@ -114,7 +127,8 @@ public class ActivityRouteApp extends Activity implements View.OnClickListener
 		// TODO: Implement this method
 		switch(item.getItemId()){
 			case R.id.action_search:
-				Toast.makeText(this, "Searching...", Toast.LENGTH_LONG).show();
+				// click on icon search in actionbar
+				//Toast.makeText(this, "Searching...", Toast.LENGTH_LONG).show();
 		}
 		return super.onOptionsItemSelected(item);
 	}
