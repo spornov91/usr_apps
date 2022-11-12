@@ -15,10 +15,14 @@ public class FragListUserApps extends Fragment
 {
 	private String TAG = "spornov91";
 	private ArrayAdapter<String> adapter;
+	String[] notNullPkgList;
+	String[] filtredPkgList;
+	ListView listApps;
+	View v;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		View v = inflater.inflate(R.layout.frag_list_user_apps,null);
+		v = inflater.inflate(R.layout.frag_list_user_apps,null);
 		// Flags: See below
 		int flags = 
 		    PackageManager.GET_META_DATA | 
@@ -40,14 +44,40 @@ public class FragListUserApps extends Fragment
 			} 
 
 		}
-		final String[] notNullPkgList = DelEmptyRowArray(pkgList);
-		String[] clearPkgList = editPkgName(notNullPkgList);
+		filtredPkgList = DelEmptyRowArray(pkgList);
+		notNullPkgList = filterSystemPkgName("",filtredPkgList);
+		create_list_apps();
+		
+		return v;
+
+};
+
+	private static String[] filterSystemPkgName(String s,String[] arr)
+	{
+		ArrayList<String> list = new ArrayList<String>();
+		for (String str : arr)
+		{
+			if(str.toLowerCase().contains(s.toString().toLowerCase().trim()))
+				list.add(str);
+		}
+		return list.toArray(new String[0]);
+    };
+
+	public void search_in_actionbar(String s)
+	{
+		//notNullPkgList = editSystemPkgName(notNullPkgList);
+		notNullPkgList = filterSystemPkgName(s,filtredPkgList);
+		create_list_apps();
+    }
+
+	public void create_list_apps(){
+		//String[] clearPkgList = editSystemPkgName(notNullPkgList);
 		// находим список
-		ListView listApps = v.findViewById(R.id.listApps);
+		listApps = v.findViewById(R.id.listApps);
 
 		// создаем адаптер
 		adapter = new ArrayAdapter<String>(
-		getActivity().getApplicationContext(),
+			getActivity().getApplicationContext(),
 			android.R.layout.simple_list_item_1, notNullPkgList
 		);
 
@@ -55,20 +85,14 @@ public class FragListUserApps extends Fragment
 		listApps.setAdapter(adapter);
 		listApps.setOnItemClickListener(new OnItemClickListener() {
 				@Override
-				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+				public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+				{
 					String item1 = (String)((TextView) view).getText();
-				    String item2 = notNullPkgList[position];
-					showPopup(item1,view);
+					String item2 = notNullPkgList[position];
+					showPopup(item1, view);
 				}
-		});
-		
-		return v;
-
-};
-	public void search_in_actionbar(String s){
-	    adapter.getFilter().filter(s);
-    }
+			});
+	};
 
 private static String[] DelEmptyRowArray(String[] arr) {
 		ArrayList<String> list = new ArrayList<String>();

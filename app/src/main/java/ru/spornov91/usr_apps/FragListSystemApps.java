@@ -30,14 +30,17 @@ public class FragListSystemApps extends Fragment
 
 	private String TAG = "spornov91";
 	private ArrayAdapter<String> adapter;
-	
+	String[] notNullPkgList;
+	String[] filtredPkgList;
+	ListView listApps;
+	View v;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		//Посылаем данные Activity
 		//fragmentSendDataListener.onSendData("system");
-		
-		View v = inflater.inflate(R.layout.frag_list_system_apps,null);
+
+		v = inflater.inflate(R.layout.frag_list_system_apps, null);
 		// Flags: See below
 		int flags = 
 		    PackageManager.GET_META_DATA | 
@@ -49,24 +52,53 @@ public class FragListSystemApps extends Fragment
 		List<ApplicationInfo> packages = pm.getInstalledApplications(flags);
 		int psize = packages.size();
 		String[] pkgList = new String[psize];
-		for (int i = 0; i < psize; i++) {
-			if ((packages.get(i).flags & ApplicationInfo.FLAG_SYSTEM) == 1) {
+		for (int i = 0; i < psize; i++)
+		{
+			if ((packages.get(i).flags & ApplicationInfo.FLAG_SYSTEM) == 1)
+			{
 				// System application
 				pkgList[i] = packages.get(i).sourceDir;
-				if(((packages.get(i).packageName).toString()) == "com.aide.ui"){
+				if (((packages.get(i).packageName).toString()) == "com.aide.ui")
+				{
 				    Log.d(TAG, "package : " + packages.get(i).packageName + " :" + packages.get(i).sourceDir);
 				}
 			} 
 
 		}
-		final String[] notNullPkgList = DelEmptyRowArray(pkgList);
-		String[] clearPkgList = editSystemPkgName(notNullPkgList);
+		filtredPkgList = DelEmptyRowArray(pkgList);
+		notNullPkgList = filterSystemPkgName("",filtredPkgList);
+		create_list_apps();
+
+		return v;
+
+	};
+	
+	private static String[] filterSystemPkgName(String s,String[] arr)
+	{
+		ArrayList<String> list = new ArrayList<String>();
+		for (String str : arr)
+		{
+			if(str.toLowerCase().contains(s.toString().toLowerCase().trim()))
+				list.add(str);
+		}
+		return list.toArray(new String[0]);
+    };
+	
+	public void search_in_actionbar(String s)
+	{
+		//notNullPkgList = editSystemPkgName(notNullPkgList);
+		notNullPkgList = filterSystemPkgName(s,filtredPkgList);
+		create_list_apps();
+    }
+
+	public void create_list_apps(){
+		//String[] clearPkgList = editSystemPkgName(notNullPkgList);
 		// находим список
-		ListView listApps = v.findViewById(R.id.listApps);
+		listApps = v.findViewById(R.id.listApps);
 
 		// создаем адаптер
 		adapter = new ArrayAdapter<String>(
-		getActivity().getApplicationContext(),
+			getActivity().getApplicationContext(),
 			android.R.layout.simple_list_item_1, notNullPkgList
 		);
 
@@ -74,33 +106,31 @@ public class FragListSystemApps extends Fragment
 		listApps.setAdapter(adapter);
 		listApps.setOnItemClickListener(new OnItemClickListener() {
 				@Override
-				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+				{
 					String item1 = (String)((TextView) view).getText();
 					String item2 = notNullPkgList[position];
-					showPopup(item1,view);
+					showPopup(item1, view);
 				}
 		});
-		
-		return v;
-
-};
-
-	public void search_in_actionbar(String s){
-	    adapter.getFilter().filter(s);
-    }
-
-private static String[] DelEmptyRowArray(String[] arr) {
+	}
+	
+    private static String[] DelEmptyRowArray(String[] arr)
+	{
 		ArrayList<String> list = new ArrayList<String>();
-		for (String str : arr) {
+		for (String str : arr)
+		{
 			if (str != null)
 				list.add(str);
 		}
 		return list.toArray(new String[0]);
-};
+    };
 
-	private static String[] editSystemPkgName(String[] arr) {
+	private static String[] editSystemPkgName(String[] arr)
+	{
 		ArrayList<String> list = new ArrayList<String>();
-		for (String str : arr) {
+		for (String str : arr)
+		{
 			String[] parts = str.split("/");
 			str = parts[3];
 			int index = str.indexOf("-");
@@ -119,8 +149,9 @@ private static String[] DelEmptyRowArray(String[] arr) {
 		}
 		return list.toArray(new String[0]);
 	};
-	
-    public void showPopup(String txt, View view) {
+
+    public void showPopup(String txt, View view)
+	{
 		FragDialogPopup myDialogFragment = new FragDialogPopup(txt);
 		FragmentManager manager = getFragmentManager();
 		FragmentTransaction transaction = manager.beginTransaction();
