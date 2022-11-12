@@ -19,28 +19,33 @@ public class ActivityRouteApp extends Activity implements View.OnClickListener
 	{
 		switch (p1.getId()) {
             case R.id.bfraglistsystemapps:
+				num_frag = 0;
 				ft = getFragmentManager().beginTransaction();
 				fragment = new FragListSystemApps();
-				num_frag = 0;
+				ft.replace(R.id.sframe, fragment);
+				ft.commit();
                 break;
             case R.id.bfraglistuserapps:
+				num_frag = 1;
 				ft = getFragmentManager().beginTransaction();
 				fragment = new FragListUserApps();
-				num_frag = 1;
+				ft.replace(R.id.sframe, fragment);
+				ft.commit();
                 break;
 			case R.id.bfraglistuserdataapps:
+				num_frag = 2;
 				ft = getFragmentManager().beginTransaction();
 				fragment = new FragListUserDataApps();
-				num_frag = 2;
+				ft.replace(R.id.sframe, fragment);
+				ft.commit();
                 break;
 			case R.id.bfragsettings:
+				num_frag = 3;
 				Intent intent = new Intent(getApplicationContext(), ActivitySettings.class);
 				startActivity(intent);
 				break;
 			default : break;
 		}
-		ft.replace(R.id.sframe, fragment);
-		ft.commit();
 	};
 	
 	FragmentTransaction ft;
@@ -114,9 +119,13 @@ public class ActivityRouteApp extends Activity implements View.OnClickListener
 
 		ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
 		searchView.setLayoutParams(params);
+		
+		searchView.setFocusable(false);
 		searchView.setIconified(false);
+		searchView.clearFocus();
+		
 		searchView.setMaxWidth( Integer.MAX_VALUE );
-		searchItem.expandActionView();
+		//searchItem.expandActionView();
 		
 		return true;
 	}
