@@ -36,7 +36,7 @@
 			android:layout_width="wrap_content"
 			style="?android:attr/buttonBarButtonStyle"
 			android:layout_height="wrap_content"
-			android:src="@drawable/ic_recents"
+			android:src="@drawable/apk_install1"
 			android:layout_margin="10dp"
 			android:padding="10dp"/>
 
@@ -45,7 +45,7 @@
 			android:layout_width="wrap_content"
 			style="?android:attr/buttonBarButtonStyle"
 			android:layout_height="wrap_content"
-			android:src="@drawable/ic_friends"
+			android:src="@drawable/supervised_user1"
 			android:layout_margin="10dp"
 			android:padding="10dp"/>
 
@@ -54,7 +54,7 @@
 			android:layout_width="wrap_content"
 			style="?android:attr/buttonBarButtonStyle"
 			android:layout_height="wrap_content"
-			android:src="@drawable/ic_nearby"
+			android:src="@drawable/settings_accessibility1"
 			android:layout_margin="10dp"
 			android:padding="10dp"/>
 
@@ -63,7 +63,7 @@
 			android:layout_width="wrap_content"
 			style="?android:attr/buttonBarButtonStyle"
 			android:layout_height="wrap_content"
-			android:src="@drawable/ic_restaurants"
+			android:src="@drawable/settings2"
 			android:layout_margin="10dp"
 			android:padding="10dp"/>
 

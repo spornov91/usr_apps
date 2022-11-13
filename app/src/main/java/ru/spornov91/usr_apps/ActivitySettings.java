@@ -4,12 +4,10 @@ import android.app.*;
 import android.os.*;
 import android.util.*;
 
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import java.io.*;
 import android.content.pm.*;
 import android.*;
+import android.view.*;
 
 public class ActivitySettings extends Activity
 {
@@ -18,6 +16,19 @@ public class ActivitySettings extends Activity
 		{
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.activity_settings);
+
+			getActionBar().setDisplayHomeAsUpEnabled(true);
+			getActionBar().setDisplayShowHomeEnabled(true);
 			
 		};
+		
+	    @Override
+	    public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case android.R.id.home:
+				onBackPressed();
+				return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 };

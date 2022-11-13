@@ -119,12 +119,12 @@ public class ActivityRouteApp extends Activity implements View.OnClickListener
 
 		ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
 		searchView.setLayoutParams(params);
-		
 		searchView.setFocusable(false);
 		searchView.setIconified(false);
-		searchView.clearFocus();
+		//searchView.clearFocus();
 		
 		searchView.setMaxWidth( Integer.MAX_VALUE );
+		
 		//searchItem.expandActionView();
 		
 		return true;

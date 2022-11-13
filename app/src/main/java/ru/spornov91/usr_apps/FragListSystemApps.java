@@ -12,6 +12,7 @@ import android.widget.AdapterView.*;
 import java.io.*;
 import java.util.*;
 import android.text.*;
+import android.graphics.drawable.*;
 
 
 public class FragListSystemApps extends Fragment
@@ -31,9 +32,27 @@ public class FragListSystemApps extends Fragment
 	private String TAG = "spornov91";
 	private ArrayAdapter<String> adapter;
 	String[] notNullPkgList;
-	String[] filtredPkgList;
+	
 	ListView listApps;
 	View v;
+	
+	String[] arrNamesSystemPkgs;
+    ArrayList<String> arrDirsSystemPkgs;
+	ArrayList<Drawable> arrIconsSystemPkgs;
+	String[] arrSubtitleSystemPkgList;
+    Drawable[] arrIconsSystemPkgList;
+	
+	class InfoObject {
+        public String appname = "";
+        public String dirname = "";
+        public Drawable iconpkg;
+
+        public void InfoObjectAggregatePrint() {
+            Log.v(appname, appname);
+        }
+
+    }
+	ArrayList < InfoObject > obj = new ArrayList < InfoObject > ();
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -54,24 +73,98 @@ public class FragListSystemApps extends Fragment
 		String[] pkgList = new String[psize];
 		for (int i = 0; i < psize; i++)
 		{
+			if (packages.get(i) != null){
+			
 			if ((packages.get(i).flags & ApplicationInfo.FLAG_SYSTEM) == 1)
 			{
 				// System application
-				pkgList[i] = packages.get(i).sourceDir;
+				
+				InfoObject newInfo = new InfoObject(); 
+				newInfo.appname = packages.get(i).packageName;
+				newInfo.dirname = packages.get(i).sourceDir; 
+				newInfo.iconpkg = packages.get(i).loadIcon(pm);
+				obj.add(newInfo);
+				//Log.d("obj size: ", "" + newInfo.appname);
 				if (((packages.get(i).packageName).toString()) == "com.aide.ui")
 				{
 				    Log.d(TAG, "package : " + packages.get(i).packageName + " :" + packages.get(i).sourceDir);
 				}
 			} 
+			
+			}
 
 		}
-		filtredPkgList = DelEmptyRowArray(pkgList);
-		notNullPkgList = filterSystemPkgName("",filtredPkgList);
+		for(int i = 0;i < obj.size();i++){
+			Log.d("PKG NAMES: ", "" + obj.get(i).dirname );
+		}
+		
+		
+		arrNamesSystemPkgs = objToArrNames(obj);//mockCreateArrNamesSystemPkgList(obj.size());
+		arrSubtitleSystemPkgList = objToArrDirs(obj);//mockCreateArrDirsSystemPkgList(obj.size());
+		notNullPkgList = filterSystemPkgName("",arrNamesSystemPkgs);
+		arrIconsSystemPkgList = objToArrIcons(obj);//mockCreateArrIconsSystemPkgList(obj.size());
 		create_list_apps();
 
 		return v;
 
 	};
+	
+	private static Drawable[] objToArrIcons(ArrayList < InfoObject > obj){
+		ArrayList<Drawable> list = new ArrayList<Drawable>();
+		for (int i = 0; i < obj.size();i++)
+		{
+		    list.add(obj.get(i).iconpkg);
+		}
+		return list.toArray(new Drawable[0]);
+	};
+	
+	private static String[] objToArrDirs(ArrayList < InfoObject > obj){
+		ArrayList<String> list = new ArrayList<String>();
+		for (int i = 0; i < obj.size();i++)
+		{
+		    list.add(obj.get(i).dirname);
+		}
+		return list.toArray(new String[0]);
+	};
+	
+	private static String[] objToArrNames(ArrayList < InfoObject > obj){
+		ArrayList<String> list = new ArrayList<String>();
+		for (int i = 0; i < obj.size();i++)
+		{
+		    list.add(obj.get(i).appname);
+		}
+		return list.toArray(new String[0]);
+	};
+	
+	private static String[] mockCreateArrDirsSystemPkgList(int size)
+	{
+		ArrayList<String> list = new ArrayList<String>();
+		for (int i = 0; i < size;i++)
+		{
+		    list.add("dir/1");
+		}
+		return list.toArray(new String[0]);
+    };
+	
+	private static String[] mockCreateArrNamesSystemPkgList(int size)
+	{
+		ArrayList<String> list = new ArrayList<String>();
+		for (int i = 0; i < size;i++)
+		{
+		    list.add("name1");
+		}
+		return list.toArray(new String[0]);
+    };
+	
+	private static Integer[] mockCreateArrIconsSystemPkgList(int size)
+	{
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		for (int i = 0; i < size;i++)
+		{
+		    list.add(R.drawable.ic_friends);
+		}
+		return list.toArray(new Integer[0]);
+    };
 	
 	private static String[] filterSystemPkgName(String s,String[] arr)
 	{
@@ -87,7 +180,7 @@ public class FragListSystemApps extends Fragment
 	public void search_in_actionbar(String s)
 	{
 		//notNullPkgList = editSystemPkgName(notNullPkgList);
-		notNullPkgList = filterSystemPkgName(s,filtredPkgList);
+		notNullPkgList = filterSystemPkgName(s,arrNamesSystemPkgs);
 		create_list_apps();
     }
 
@@ -97,10 +190,11 @@ public class FragListSystemApps extends Fragment
 		listApps = v.findViewById(R.id.listApps);
 
 		// создаем адаптер
-		adapter = new ArrayAdapter<String>(
-			getActivity().getApplicationContext(),
-			android.R.layout.simple_list_item_1, notNullPkgList
-		);
+		adapter=new AdapterMyList(getActivity(), notNullPkgList, arrSubtitleSystemPkgList, arrIconsSystemPkgList);  
+//		adapter = new ArrayAdapter<String>(
+//			getActivity().getApplicationContext(),
+//			android.R.layout.simple_list_item_1, notNullPkgList
+//		);
 
 		// присваиваем адаптер списку
 		listApps.setAdapter(adapter);
@@ -108,9 +202,11 @@ public class FragListSystemApps extends Fragment
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 				{
-					String item1 = (String)((TextView) view).getText();
-					String item2 = notNullPkgList[position];
-					showPopup(item1, view);
+					//String item1 = (String)((TextView) view).getText();
+					//String item2 = notNullPkgList[position];
+					String item3 = parent.getAdapter().getItem(position).toString();
+					Log.d("objj",item3);
+					showPopup(item3, view);
 				}
 		});
 	}
